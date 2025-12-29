@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// Import the Layout component from antd (provides Layout, Content, etc.)
+import { Layout } from 'antd';
+// Import QueryClient and provider from react-query for server state management
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// Import routing primitives from react-router-dom for client-side routing
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+// Import the top navigation bar component
+import Navbar from "./components/Navbar";
+// Import page components used by the route table
+import HomePage from "./pages/HomePage";
 
-function App() {
-  const [count, setCount] = useState(0)
+// Destructure Content from the Layout object provided by antd
+const { Content } = Layout;
+
+// Create a single QueryClient instance for the app (react-query)
+const queryClient = new QueryClient();
+
+// Root App component - sets up providers and routing root
+const App = () => {
+  // Simple debug log to show when App renders
+  console.log('App component rendering');
+
+  // Return the provider and router wrappers for the app
+  return (
+    // Provide react-query context to the component tree
+    <QueryClientProvider client={queryClient}>
+      {/* Wrap the app in a BrowserRouter for client-side navigation */}
+      <BrowserRouter>
+        {/* Render the main app content (layout + routes) */}
+        <AppContent />
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
+};
+
+// AppContent component - contains layout and route definitions
+const AppContent = () => {
+  // Debug log to show when AppContent renders
+  console.log('AppContent component rendering');
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    // Use antd Layout to give the page a consistent structure
+    <Layout style={{ minHeight: '100vh' }}>
+      {/* Render the site's navigation bar */}
+      <Navbar />
+      {/* The main content area supplied by antd's Layout */}
+      <Content>
+        {/* Routes defines the application's route table */}
+        <Routes>
+          {/* Static Routes */}
+          {/* Home route - renders HomePage at root path */}
+          <Route path="/" element={<HomePage />} />
+          {/* About route - renders AboutPage at /about */}
+          <Route path="/about" element={<h1 style={{ margin: "20px", fontSize: "28px" }}>About Page</h1>} />
 
-export default App
+          <Route path="/dashboard" element={<h1 style={{ margin: "20px", fontSize: "28px" }}>Dashboard Page</h1>} />
+
+        </Routes>
+      </Content>
+    </Layout>
+  );
+};
+
+// Export the App component as the default export from this module
+export default App;
