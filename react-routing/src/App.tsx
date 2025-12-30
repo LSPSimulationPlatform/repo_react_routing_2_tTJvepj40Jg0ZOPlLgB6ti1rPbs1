@@ -9,7 +9,7 @@ import Navbar from "./components/Navbar";
 // Import page components used by the route table
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
-
+import DashboardPage from "./pages/DashboardPage";
 // Destructure Content from the Layout object provided by antd
 const { Content } = Layout;
 
@@ -56,7 +56,11 @@ const AppContent = () => {
 
           {/* Dashboard with Nested Routes */}
           {/* Dashboard base route - DashboardPage renders and may host nested routes */}
-          <Route path="/dashboard" element={<h1 style={{ margin: "20px", fontSize: "28px" }}>Dashboard Page</h1>}>
+          <Route path="/dashboard" element={<DashboardPage />}>
+            {/* Nested profile route under /dashboard/profile */}
+            <Route path="profile" element={<h1 style={{ margin: "20px", fontSize: "28px" }}>Profile Page</h1>} />
+            {/* Nested settings route under /dashboard/settings */}
+            <Route path="settings" element={<h1 style={{ margin: "20px", fontSize: "28px" }}>Settings Page</h1>} />
           </Route>
 
         </Routes>
