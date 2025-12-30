@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 // Import page components used by the route table
 import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
 
 // Destructure Content from the Layout object provided by antd
 const { Content } = Layout;
@@ -51,9 +52,12 @@ const AppContent = () => {
           {/* Home route - renders HomePage at root path */}
           <Route path="/" element={<HomePage />} />
           {/* About route - renders AboutPage at /about */}
-          <Route path="/about" element={<h1 style={{ margin: "20px", fontSize: "28px" }}>About Page</h1>} />
+          <Route path="/about" element={<AboutPage />} />
 
-          <Route path="/dashboard" element={<h1 style={{ margin: "20px", fontSize: "28px" }}>Dashboard Page</h1>} />
+          {/* Dashboard with Nested Routes */}
+          {/* Dashboard base route - DashboardPage renders and may host nested routes */}
+          <Route path="/dashboard" element={<h1 style={{ margin: "20px", fontSize: "28px" }}>Dashboard Page</h1>}>
+          </Route>
 
         </Routes>
       </Content>
